@@ -30,14 +30,13 @@ public class Operations {
     }
 
     public static List<Map<String, String>> select(Table from, String... columns) {
-        List<Map<String, String>> universe = from.getData().stream().map(tuple -> Arrays.asList(columns).stream()
+        return from.getData().stream().map(tuple -> Arrays.stream(columns)
                 .filter(tuple::containsKey)
                 .collect(Collectors.toMap(Function.identity(), tuple::get)))
                 .collect(Collectors.toList());
-        return universe;
     }
 
-    protected static final Map<String, String> merge(Map<String, String> m1, Map<String, String> m2) {
+    static Map<String, String> merge(Map<String, String> m1, Map<String, String> m2) {
         LinkedHashMap<String, String> mx = new LinkedHashMap<>(m1);
         mx.putAll(m2);
         return mx;

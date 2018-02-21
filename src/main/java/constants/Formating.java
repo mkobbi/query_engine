@@ -3,12 +3,12 @@ package constants;
 public class Formating {
 
 
-    public static final String transformStringForURL(String input) {
+    public static String transformStringForURL(String input) {
         return input.trim().replaceAll("\\s+", "+");
     }
 
-    public static final String getFileNameForInputs(String... inputs) {
-        StringBuffer buff = new StringBuffer();
+    public static String getFileNameForInputs(String... inputs) {
+        StringBuilder buff = new StringBuilder();
         boolean first = true;
         for (String input : inputs) {
             if (!first) buff.append("_");

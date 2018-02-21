@@ -1,14 +1,12 @@
 package parsers;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import constants.Settings;
+import download.WebService;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
-import javax.smartcardio.ATR;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,26 +14,24 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import constants.Settings;
-import download.WebService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class WebServiceDescription {
 
     public static WebService loadDescription(String webServiceName) {
-        /** prefixes **/
-        HashMap<String, String> prefixes = new HashMap<String, String>();
+        /* prefixes **/
+        HashMap<String, String> prefixes = new HashMap<>();
 
-        /** head variables **/
-        HashMap<String, Integer> headVariableToPosition = new HashMap<String, Integer>();
-        ArrayList<String> headVariables = new ArrayList<String>();
+        /* head variables **/
+        HashMap<String, Integer> headVariableToPosition = new HashMap<>();
+        ArrayList<String> headVariables = new ArrayList<>();
         int numberInputs = 0;
-        List<String> urlFragments = new ArrayList<String>();
+        List<String> urlFragments = new ArrayList<>();
 
         try {
             FileInputStream file = new FileInputStream(new File(Settings.dirWithDef + webServiceName + ".xml"));
@@ -76,7 +72,7 @@ public class WebServiceDescription {
                 if (type.trim().startsWith("in")) numberInputs = i;
 
                 headVariables.add(name.trim());
-                headVariableToPosition.put(name.trim(), new Integer(i));
+                headVariableToPosition.put(name.trim(), i);
 
                 System.out.println("Variable : " + name + " position " + i);
             }
@@ -104,19 +100,7 @@ public class WebServiceDescription {
 
             return new WebService(webServiceName, urlFragments, prefixes, headVariables, headVariableToPosition, numberInputs);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } catch (SAXException e) {
-            e.printStackTrace();
-            return null;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-            return null;
-        } catch (XPathExpressionException e) {
+        } catch (XPathExpressionException | ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
             return null;
         }

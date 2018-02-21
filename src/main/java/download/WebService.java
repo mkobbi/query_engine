@@ -15,17 +15,18 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 
 public class WebService {
 
 
-    String name;
+    private final String name;
 
     /**
      * the lists of fragments and variables that form the URL, on the position of variables we have the value null
      **/
-    List<String> urlFragments;
+    private final List<String> urlFragments;
 
     /**
      * The head
@@ -37,12 +38,7 @@ public class WebService {
      * and their order should be exactly the one required by the construction of the URL
      **/
     public HashMap<String, Integer> headVariableToPosition;
-    public int numberOfInputs;
 
-    /**
-     * The body
-     **/
-    HashMap<String, String> prefixes;
     List<Triple> body;
 
     /**
@@ -54,9 +50,10 @@ public class WebService {
 
         this.headVariables = headVariables;
         this.headVariableToPosition = headVariableToPosition;
-        this.numberOfInputs = numberInputs;
 
-        this.prefixes = prefixes;
+        /*
+      The body
+     */
     }
 
     /**
@@ -80,8 +77,7 @@ public class WebService {
 
         //otherwise call the web service
         String URL = getURLForCallWithInputs(inputs);
-        String confirmationFileWithResult = downloadCallResults(URL, fileWithCallResult);
-        return confirmationFileWithResult;
+        return downloadCallResults(URL, fileWithCallResult);
 
     }
 
@@ -111,9 +107,9 @@ public class WebService {
      * @param inputs
      * @return the URL of the call for the given inputs
      */
-    public String getURLForCallWithInputs(String... inputs) {
+    private String getURLForCallWithInputs(String... inputs) {
         int i = 0;
-        StringBuffer call = new StringBuffer();
+        StringBuilder call = new StringBuilder();
         for (String p : urlFragments) {
             if (p == null) {
                 if (i >= inputs.length) return null; //something wrong; insufficient number of inputValues values
@@ -128,7 +124,7 @@ public class WebService {
      * @param fileForTheResults
      * @return downloads the file and stores it in the file. If the call result is JSON, then transforms it to XML
      */
-    public String downloadCallResults(String URL, String fileForTheResults) {
+    private String downloadCallResults(String URL, String fileForTheResults) {
         String newLine = System.getProperty("line.separator");
         BufferedReader in = null;
         Writer writer = null;
@@ -165,13 +161,13 @@ public class WebService {
 
             // write the rest of the inputValues file
             while ((line = in.readLine()) != null) {
-                writer.write(line + newLine);
+                Objects.requireNonNull(writer).write(line + newLine);
                 System.out.println(line);
             }
-            writer.flush();
+            Objects.requireNonNull(writer).flush();
 
             // if it's json data do the transformation 
-            if (isJSONData) JSONToXML.transformToXML(((StringWriter) writer).toString(), fileForTheResults);
+            if (isJSONData) JSONToXML.transformToXML(writer.toString(), fileForTheResults);
         } catch (IOException e) {
             System.out.println("Error in the download " + URL);
             return null;
@@ -184,7 +180,7 @@ public class WebService {
                 if (in != null) in.close();
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
+                //return null;
             }
         }
         return fileForTheResults;

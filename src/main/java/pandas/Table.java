@@ -9,14 +9,13 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static pandas.Operations.join;
-import static pandas.Operations.select;
 
 public class Table {
-    protected Queries type;
-    protected String inputKey;
-    protected String[] inputValues;
-    protected List<Map<String, String>> data;
-    protected Map<String, String> output;
+    private Queries type;
+    private final String inputKey;
+    private final String[] inputValues;
+    private List<Map<String, String>> data;
+    private Map<String, String> output;
 
     /*    public Table(String query) throws Exception {
         this(query, Objects.requireNonNull(WebServiceDescription.
@@ -25,6 +24,11 @@ public class Table {
                                 split("[(,]")).get(0))).headVariables);
     }*/
 
+    /**
+     * @param query       atom query to load in the table
+     * @param inputValues list of input values to be considered for the primary key
+     * @throws Exception when the webService can't be correctly loaded
+     */
     public Table(String query, String... inputValues) throws Exception {
         this(query, Objects.requireNonNull(WebServiceDescription.
                         loadDescription("mb_" + Arrays.
@@ -33,6 +37,10 @@ public class Table {
                 inputValues);
     }
 
+    /**
+     * @param t left side of the join operation
+     * @param u right side of the join operation
+     */
     public Table(Table t, Table u) {
         this.type = Queries.mb_PartialResults;
         this.data = join(t, u);
@@ -40,10 +48,17 @@ public class Table {
         inputKeySet.retainAll(u.getData().get(0).keySet());
         this.inputKey = inputKeySet.toArray(new String[0])[0];
         this.inputValues = this.data.stream().
-                map(entry -> entry.get(this.inputKey)).collect(Collectors.toSet()).toArray(new String[0]);
+                map(entry -> entry.get(this.inputKey)).distinct().toArray(String[]::new);
         this.output = Operations.merge(t.getOutput(), u.getOutput());
     }
 
+    /**
+     *
+     * @param query atom query to load in the table
+     * @param keys
+     * @param inputValues list of input values to be considered for the primary key
+     * @throws Exception
+     */
     public Table(String query, List<String> keys, String... inputValues) throws Exception {
 
         List<String> decomposition = Arrays.asList(query.substring(0, query.length() - 1)
@@ -63,7 +78,7 @@ public class Table {
         setData(webServiceName, this.getInputValues());
     }
 
-    protected void setData(String webServiceName, String... inputs) throws Exception {
+    private void setData(String webServiceName, String... inputs) throws Exception {
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
         ArrayList<Map<String, String>> listOfTupleResult = new ArrayList<>();
         for (String input : inputs) {
@@ -85,23 +100,11 @@ public class Table {
     }
 
 
-    //Transformer en un select de la colonne id et supprimer plus tard
-    protected void setData(String webServiceName, Table t) throws Exception {
-        WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
-        String column = ws.headVariables.get(0);
-        List<Map<String, String>> sigma = select(t, column);
-        List<String> l = new ArrayList<>();
-        sigma.stream().map(tuple -> tuple.get(column)).forEach(l::add);
-        String[] input = l.toArray(new String[0]);
-        setData(webServiceName, input);
-    }
-
-
     @Override
     public String toString() {
         return "Table{" +
                 "type=" + type +
-                ", inputValues='" + inputValues + '\'' +
+                ", inputValues='" + Arrays.toString(inputValues) + '\'' +
                 ", output=" + output +
                 '}';
     }
@@ -119,7 +122,7 @@ public class Table {
         return output;
     }
 
-    protected void setOutput(String query, List<String> keys) {
+    private void setOutput(String query, List<String> keys) {
         List<String> decomposition = Arrays.asList(query.substring(0, query.length() - 1).trim().split("[(,]"));
         this.output = new LinkedHashMap<>();
         keys.remove(0);

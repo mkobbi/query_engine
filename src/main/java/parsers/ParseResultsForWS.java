@@ -1,25 +1,24 @@
 package parsers;
 
-import java.util.ArrayList;
+import download.WebService;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import download.WebService;
+import java.util.ArrayList;
+import java.util.Objects;
 
 public class ParseResultsForWS {
-    static final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
-    static final DocumentBuilder builder = getBuilder();
-    static final XPath xPath = XPathFactory.newInstance().newXPath();
+    private static final DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
+    private static final DocumentBuilder builder = getBuilder();
+    private static final XPath xPath = XPathFactory.newInstance().newXPath();
 
-    public static final DocumentBuilder getBuilder() {
+    private static DocumentBuilder getBuilder() {
         try {
             return builderFactory.newDocumentBuilder();
         } catch (Exception e) {
@@ -34,9 +33,9 @@ public class ParseResultsForWS {
      * @throws Exception
      */
     public static ArrayList<String[]> showResults(String fileWithWithTransfResults, WebService ws) throws Exception {
-        ArrayList<String[]> listOfTupleResults = new ArrayList<String[]>();
+        ArrayList<String[]> listOfTupleResults = new ArrayList<>();
 
-        Document xmlDocument = builder.parse(fileWithWithTransfResults);
+        Document xmlDocument = Objects.requireNonNull(builder).parse(fileWithWithTransfResults);
         System.out.println("Parse document " + fileWithWithTransfResults);
 
         String record = "/RESULT/RECORD";
@@ -61,7 +60,7 @@ public class ParseResultsForWS {
 
                 Integer posVariable = ws.headVariableToPosition.get(variable.trim());
                 if (posVariable == null) System.err.println("Incorrect script: variable unknown ");
-                tuple[posVariable] = value.trim();
+                else tuple[posVariable] = value.trim();
             }
 
             listOfTupleResults.add(tuple);
