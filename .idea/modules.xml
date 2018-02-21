@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ws-execution.iml" filepath="$PROJECT_DIR$/ws-execution.iml" />
+      <module fileurl="file://$PROJECT_DIR$/query_engine.iml" filepath="$PROJECT_DIR$/query_engine.iml" />
     </modules>
   </component>
 </project>
