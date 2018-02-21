@@ -5,6 +5,8 @@ import org.junit.Test;
 import parsers.ParseResultsForWS;
 import parsers.WebServiceDescription;
 
+import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 import static junit.framework.TestCase.fail;
@@ -21,6 +23,9 @@ public class TableTest {
     //private final String query = "getArtistInfoByName(Elvis Presley, ?artistId, ?beginDate, ?endDate)";
     private final WebService ws = WebServiceDescription.loadDescription("mb_getAlbumsArtistId");
     private final ArrayList<String> keys = Objects.requireNonNull(ws).headVariables;
+
+    public TableTest() throws FileNotFoundException, UnsupportedEncodingException {
+    }
 
     @org.junit.Test
     public void toStringTest() throws Exception {

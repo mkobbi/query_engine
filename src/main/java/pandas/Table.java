@@ -69,6 +69,8 @@ public class Table {
             this.type = Queries.mb_getAlbumsArtistId;
         } else if (webServiceName.equals("getArtistInfoByName")) {
             this.type = Queries.mb_getArtistInfoByName;
+        } else if (webServiceName.equals("getSongByAlbumId")) {
+            this.type = Queries.mb_getSongByAlbumId;
         }
         //this.inputValues = new ArrayList<>();
         //decomposition.stream().filter(cell -> cell.contains("\"")).forEach(this.inputValues::add);
@@ -86,7 +88,11 @@ public class Table {
             String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
             for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
                 LinkedHashMap<String, String> toAdd = new LinkedHashMap<String, String>() {{
-                    put(ws.headVariables.get(0).substring(1).trim(), tuple[0].contains("NODEF") ? input.trim() : tuple[0].trim());
+                    put(ws.headVariables.get(0).substring(1).trim(),
+                            (tuple[0].contains("NODEF") || tuple[0].isEmpty()) ?
+                                    input.trim()
+                                    : tuple[0].trim()
+                    );
                 }};
                 for (int i = 1; i < ws.headVariables.size(); i++) {
                     toAdd.put(ws.headVariables.get(i).substring(1).trim(), tuple[i].trim());

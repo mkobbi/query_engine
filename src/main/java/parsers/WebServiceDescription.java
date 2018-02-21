@@ -14,16 +14,15 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class WebServiceDescription {
 
-    public static WebService loadDescription(String webServiceName) {
+    public static WebService loadDescription(String webServiceName) throws FileNotFoundException, UnsupportedEncodingException {
+        PrintWriter writer = new PrintWriter("description-log.txt", "UTF-8");
         /* prefixes **/
         HashMap<String, String> prefixes = new HashMap<>();
 
@@ -56,7 +55,7 @@ public class WebServiceDescription {
                 Node nodeValue = (Node) xPath.compile(expr_value).evaluate(nodeList.item(i), XPathConstants.NODE);
                 String prefix_value = nodeValue.getNodeValue();
                 prefixes.put(prefix_name.trim(), prefix_value.trim());
-                System.out.println(" prefix name=" + prefix_name.trim() + "  value=" + prefix_value.trim());
+                writer.println(" prefix name=" + prefix_name.trim() + "  value=" + prefix_value.trim());
 
             }
 
@@ -74,7 +73,7 @@ public class WebServiceDescription {
                 headVariables.add(name.trim());
                 headVariableToPosition.put(name.trim(), i);
 
-                System.out.println("Variable : " + name + " position " + i);
+                writer.println("Variable : " + name + " position " + i);
             }
 
 
@@ -92,19 +91,19 @@ public class WebServiceDescription {
                     urlFragments.add(fixPart.trim());
                 }
             }
-            System.out.print("The parts of the URLs (calls):");
+            writer.print("The parts of the URLs (calls):");
             for (String part : urlFragments) {
-                System.out.print(" " + part);
+                writer.print(" " + part);
             }
-            System.out.println("");
-
+            writer.println("");
+            writer.close();
             return new WebService(webServiceName, urlFragments, prefixes, headVariables, headVariableToPosition, numberInputs);
 
         } catch (XPathExpressionException | ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
+            writer.close();
             return null;
         }
-
 
     }
 }

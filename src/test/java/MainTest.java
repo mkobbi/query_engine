@@ -10,6 +10,7 @@ import static pandas.Operations.select;
 public class MainTest {
     private static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_BLUE = "\033[34m";
     private final String query = "getArtistInfoByName(Kendrick Lamar, ?artistId, ?beginDate, ?endDate)";
     private final String query2 = "getAlbumsArtistId(?artistId, " +
             "Section.80, ?albumId, ?releaseData, ?country)";
@@ -50,14 +51,12 @@ public class MainTest {
 
     @Test
     public void split() throws Exception {
-        final String sc = ("P(?artistName, ?albumTitle) <- getArtistInfoByName(Snoop Dogg, ?artistId , " +
-                "?beginDate, ?endDate)# getAlbumsArtistId(?artistId, " +
-                "?albumTitle , ?albumId, ?releaseData, ?country)");
-        List<String> query = new LinkedList<String>(Arrays.asList(sc.split("(<-)|#")));
+        final String input = "P(?artistName, ?albumTitle) <- getArtistInfoByName(Kendrick Lamar, ?artistId , ?beginDate, ?endDate)# getAlbumsArtistId(?artistId, Section.80 , ?albumId, ?releaseData, ?country)#getSongByAlbumId(?albumId,?artistName, ?songTitle)";
+        List<String> query = new LinkedList<>(Arrays.asList(input
+                .substring(0, input.length() - 1)
+                .trim().split("(<-)|#")));
 
         List<String> atoms = query.subList(1, query.size());
-
-        System.out.println(ANSI_GREEN + atoms.get(0) + ANSI_RESET);
 
         Table t = new Table(atoms.get(0));
         atoms.remove(atoms.get(0));
@@ -66,21 +65,34 @@ public class MainTest {
             List<String> decomposition = Arrays.asList(atom.substring(0, atom.length() - 1)
                     .trim().split("[(,]"));
             String webServiceName = decomposition.get(0);
-            WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
 
-            String joinKey = ws.headVariables.get(0).substring(1);
+            WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
+            String joinKey = Objects.requireNonNull(ws).headVariables.get(0).substring(1);
 
             System.out.println(ANSI_GREEN + joinKey + ANSI_RESET);
-
             //List<String> joinValues =
             select(t, joinKey).stream()
                     //.map(elt -> elt.get(joinKey))
                     //.collect(Collectors.toList());
                     .forEach(System.out::println);
 
-            //joinValues.;
+            String[] joinValues =
+                    select(t, joinKey).stream().map(elt -> elt.get(joinKey)).toArray(String[]::new);
 
-            //t = new Table(t, new Table(atom, joinValues.toArray(new String[0])));
+            Arrays.asList(joinValues).forEach(System.out::println);
+
+            Table u = new Table(atom, joinValues);
+            System.out.print(ANSI_BLUE);
+            u.getData().stream()
+                    //.map(elt -> elt.get(joinKey))
+                    //.collect(Collectors.toList());
+                    .forEach(System.out::println);
+            System.out.print(ANSI_RESET);
+            t = new Table(t, u);
+            select(t, joinKey).stream()
+                    //.map(elt -> elt.get(joinKey))
+                    //.collect(Collectors.toList());
+                    .forEach(System.out::println);
         }
         System.out.println(query.get(0).substring(0, query.get(0).length() - 1));
         String result = query.get(0).replaceAll("\\s+", "");

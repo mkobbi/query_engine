@@ -10,6 +10,9 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -33,10 +36,13 @@ public class ParseResultsForWS {
      * @throws Exception
      */
     public static ArrayList<String[]> showResults(String fileWithWithTransfResults, WebService ws) throws Exception {
+        FileWriter fw = new FileWriter("myfile.txt", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bw);
         ArrayList<String[]> listOfTupleResults = new ArrayList<>();
 
         Document xmlDocument = Objects.requireNonNull(builder).parse(fileWithWithTransfResults);
-        System.out.println("Parse document " + fileWithWithTransfResults);
+        out.println("Parse document " + fileWithWithTransfResults);
 
         String record = "/RESULT/RECORD";
         NodeList nodeList = (NodeList) xPath.compile(record).evaluate(xmlDocument, XPathConstants.NODESET);
@@ -65,7 +71,9 @@ public class ParseResultsForWS {
 
             listOfTupleResults.add(tuple);
         }
-
+        out.close();
+        bw.close();
+        fw.close();
         return listOfTupleResults;
     }
 

@@ -87,18 +87,23 @@ public class WebService {
      * @throws Exception
      */
     public String getTransformationResult(String fileWithCallResult) throws Exception {
+        FileWriter fw = new FileWriter("description-log.txt", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bw);
         Source callResult = new StreamSource(new File(fileWithCallResult));
 
         Source xsl = new StreamSource(new File(Settings.dirWithDef + this.name + ".xsl"));
 
         String fileName = fileWithCallResult.substring(fileWithCallResult.lastIndexOf("/") + 1);
         String fileWithTransformationResult = Settings.getDirForTransformationResults(this.name) + fileName;
-        System.out.println("File with the transformation result: " + fileWithTransformationResult);
+        out.println("File with the transformation result: " + fileWithTransformationResult);
         Result trasformResult = new StreamResult(new File(fileWithTransformationResult));
 
         Transformer transformer = TransformerFactory.newInstance().newTransformer(xsl);
         transformer.transform(callResult, trasformResult);
-
+        out.close();
+        bw.close();
+        fw.close();
         return fileWithTransformationResult;
     }
 
