@@ -12,6 +12,8 @@ public class Main {
 
     public static void main(String[] argv) throws Exception {
 
+        System.out.println("Hello World!");
+
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         List<String> query = new LinkedList<>(Arrays.asList(input

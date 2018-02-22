@@ -21,8 +21,10 @@ import java.util.List;
 
 public class WebServiceDescription {
 
-    public static WebService loadDescription(String webServiceName) throws FileNotFoundException, UnsupportedEncodingException {
-        PrintWriter writer = new PrintWriter("description-log.txt", "UTF-8");
+    public static WebService loadDescription(String webServiceName) throws IOException {
+        FileWriter fw = new FileWriter("description-log.txt", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter writer = new PrintWriter(bw);
         /* prefixes **/
         HashMap<String, String> prefixes = new HashMap<>();
 
@@ -97,11 +99,15 @@ public class WebServiceDescription {
             }
             writer.println("");
             writer.close();
+            bw.close();
+            fw.close();
             return new WebService(webServiceName, urlFragments, prefixes, headVariables, headVariableToPosition, numberInputs);
 
         } catch (XPathExpressionException | ParserConfigurationException | IOException | SAXException e) {
             e.printStackTrace();
             writer.close();
+            bw.close();
+            fw.close();
             return null;
         }
 

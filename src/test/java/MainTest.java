@@ -11,9 +11,9 @@ public class MainTest {
     private static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_BLUE = "\033[34m";
-    private final String query = "getArtistInfoByName(Kendrick Lamar, ?artistId, ?beginDate, ?endDate)";
+    private final String query = "getArtistInfoByName(Snoop Dogg, ?artistId, ?beginDate, ?endDate)";
     private final String query2 = "getAlbumsArtistId(?artistId, " +
-            "Section.80, ?albumId, ?releaseData, ?country)";
+            "Doggystyle, ?albumId, ?releaseData, ?country)";
 
     @Test
     public void main() throws Exception {
@@ -27,7 +27,7 @@ public class MainTest {
         //join(t, u).stream().forEach(System.out::println);
         //u.getData().stream().forEach(System.out::println);
         Table jointure = new Table(t, u);
-        select(jointure, "artistName", "albumTitle").forEach(System.out::println);
+        select(t, "artistName", "albumTitle").forEach(System.out::println);
         System.out.println(ANSI_GREEN + jointure.getInputKey() + ANSI_RESET);
     }
 
