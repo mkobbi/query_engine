@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Created by Mahmoud KOBBI on 090524 -->
+<!-- Created by Mahmoud KOBBI on 180221 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:mb="http://musicbrainz.org/ns/mmd-1.0#">
