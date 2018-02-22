@@ -14,7 +14,7 @@ public class Operations {
         l1.stream().flatMap(v1 -> l2.stream().filter(v2 -> where(v1, v2))
                 .map(v2 -> merge(v1, v2)))
                 .forEach(partialResults::add);
-        System.out.println(partialResults.get(0));
+        //System.out.println(partialResults.get(0));
         return partialResults;
     }
 

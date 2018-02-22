@@ -2,13 +2,45 @@ import download.WebService;
 import pandas.Table;
 import parsers.WebServiceDescription;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static pandas.Operations.select;
 
 
 public class Main {
 
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+
+    private static void toCSV(List<Map<String, String>> data) throws IOException {
+        String timestamp = sdf.format(new Timestamp(System.currentTimeMillis()));
+        FileWriter fw = new FileWriter("query-" + timestamp + ".csv", true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter out = new PrintWriter(bw);
+        List<String> headers = data.stream()
+                .flatMap(map -> map.keySet().stream()).distinct().collect(Collectors.toList());
+        final StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < headers.size(); i++) {
+            sb.append(headers.get(i));
+            sb.append(i == headers.size() - 1 ? "\n" : ",");
+        }
+        for (Map<String, String> map : data) {
+            for (int i = 0; i < headers.size(); i++) {
+                sb.append(map.get(headers.get(i)));
+                sb.append(i == headers.size() - 1 ? "\n" : ",");
+            }
+        }
+        out.println(sb.toString());
+        out.close();
+        bw.close();
+        fw.close();
+    }
 
     public static void main(String[] argv) throws Exception {
 
@@ -44,7 +76,8 @@ public class Main {
         String[] args = composite.subList(1, composite.size()).stream()
                 .map(key -> key.substring(1)).toArray(String[]::new);
 
-        select(t, args).forEach(System.out::println);
+        //select(t, args).forEach(System.out::println);
+        toCSV(select(t, args));
 
     }
 

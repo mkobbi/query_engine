@@ -3,7 +3,10 @@ import org.junit.Test;
 import pandas.Table;
 import parsers.WebServiceDescription;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static pandas.Operations.select;
 
@@ -103,4 +106,31 @@ public class MainTest {
                 .map(key -> key.substring(1)).forEach(System.out::println);
 
     }
+
+    @Test
+    public void toCSV() throws Exception {
+        Table t = new Table(query);
+        final List<Map<String, String>> list = t.getData();
+        List<String> headers = list.stream()
+                .flatMap(map -> map.keySet().stream()).distinct().collect(Collectors.toList());
+        final StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < headers.size(); i++) {
+            sb.append(headers.get(i));
+            sb.append(i == headers.size() - 1 ? "\n" : ",");
+        }
+        for (Map<String, String> map : list) {
+            for (int i = 0; i < headers.size(); i++) {
+                sb.append(map.get(headers.get(i)));
+                sb.append(i == headers.size() - 1 ? "\n" : ",");
+            }
+        }
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void timestamp() {
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        System.out.println(sdf.format(new Timestamp(System.currentTimeMillis())));
+    }
 }
+
