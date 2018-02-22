@@ -3,10 +3,7 @@ package download;
 import constants.Formating;
 import constants.Settings;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
@@ -86,10 +83,11 @@ public class WebService {
      * @return the path of the file where the result is stored
      * @throws Exception
      */
-    public String getTransformationResult(String fileWithCallResult) throws Exception {
+    public String getTransformationResult(String fileWithCallResult) throws TransformerException, IOException {
         FileWriter fw = new FileWriter("description-log.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw);
+
         Source callResult = new StreamSource(new File(fileWithCallResult));
 
         Source xsl = new StreamSource(new File(Settings.dirWithDef + this.name + ".xsl"));

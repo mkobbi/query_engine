@@ -2,9 +2,13 @@ package pandas;
 
 import download.WebService;
 import jdk.nashorn.internal.objects.annotations.Getter;
+import org.xml.sax.SAXException;
 import parsers.ParseResultsForWS;
 import parsers.WebServiceDescription;
 
+import javax.xml.transform.TransformerException;
+import javax.xml.xpath.XPathExpressionException;
+import java.io.IOException;
 import java.util.*;
 
 import static pandas.Operations.join;
@@ -35,6 +39,26 @@ public class View extends ArrayList<Row> {
                 inputValues);
     }
 
+    public View(String[] headers) {
+        this(new ArrayList<Row>() {{
+            add(new Row() {{
+                for (String arg : headers) {
+                    put(arg, "");
+                }
+            }});
+        }});
+
+    }
+
+    View(ArrayList<Row> data) {
+        super(data);
+        this.type = Queries.mb_PartialResults;
+        this.inputKey = data.get(0).keySet().toArray(new String[0])[0];
+        this.inputValues = this.stream().
+                map(entry -> entry.get(this.inputKey)).distinct().toArray(String[]::new);
+        this.output = new Row();
+    }
+
     /**
      * @param t left side of the join operation
      * @param u right side of the join operation
@@ -53,11 +77,11 @@ public class View extends ArrayList<Row> {
     /**
      *
      * @param query atom query to load in the table
-     * @param keys
-     * @param inputValues list of input values to be considered for the primary key
-     * @throws Exception
+     * @param headers list of column headers
+     * @param inputValues list of input values to be considered for the primary key. It should not be empty
+     * @throws Exception whenever there is an issue with the web service
      */
-    public View(String query, List<String> keys, String... inputValues) throws Exception {
+    View(String query, List<String> headers, String... inputValues) {
 
         List<String> decomposition = Arrays.asList(query.substring(0, query.length() - 1)
                 .trim().split("[(,]"));
@@ -76,40 +100,51 @@ public class View extends ArrayList<Row> {
         //this.inputValues = new ArrayList<>();
         //decomposition.stream().filter(cell -> cell.contains("\"")).forEach(this.inputValues::add);
         this.inputValues = decomposition.get(1).contains("?") ? inputValues : new String[]{decomposition.get(1)};
-        this.inputKey = keys.get(0);
-        setOutput(query, keys);
+        this.inputKey = headers.get(0);
+        setOutput(query, headers);
         setData(webServiceName, this.getInputValues());
     }
 
-    private void setData(String webServiceName, String... inputs) throws Exception {
-        WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
-        List<Row> listOfTupleResult = new ArrayList<>();
-        for (String input : inputs) {
-            String fileWithCallResult = Objects.requireNonNull(ws).getCallResult(input);
-            String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
-            for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
-                Row toAdd = new Row() {{
-                    put(ws.headVariables.get(0).substring(1).trim(),
-                            (tuple[0].contains("NODEF") || tuple[0].isEmpty()) ?
-                                    input.trim()
-                                    : tuple[0].trim()
-                    );
-                }};
-                for (int i = 1; i < ws.headVariables.size(); i++) {
-                    toAdd.put(ws.headVariables.get(i).substring(1).trim(), tuple[i].trim());
+    private void setData(String webServiceName, String... inputs) {
+        int count = 0;
+        final int maxTries = 3;
+        while (true) {
+            try {
+                WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
+                List<Row> listOfTupleResult = new ArrayList<>();
+                for (String input : inputs) {
+                    String fileWithCallResult = Objects.requireNonNull(ws).getCallResult(input);
+                    String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
+                    for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
+                        Row toAdd = new Row() {{
+                            put(ws.headVariables.get(0).substring(1).trim(),
+                                    (tuple[0].contains("NODEF") || tuple[0].isEmpty()) ?
+                                            input.trim()
+                                            : tuple[0].trim()
+                            );
+                        }};
+                        for (int i = 1; i < ws.headVariables.size(); i++) {
+                            toAdd.put(ws.headVariables.get(i).substring(1).trim(), (tuple[i] != null) ? tuple[i].trim() : "");
+                        }
+                        listOfTupleResult.add(toAdd);
+                    }
                 }
-                listOfTupleResult.add(toAdd);
+                ArrayList<Row> list = new ArrayList<>();
+                for (Row row : listOfTupleResult) {
+                    if (Operations.where(row, output)) {
+                        list.add(row);
+                    }
+                }
+                this.clear();
+                this.addAll(list);
+                break;
+            } catch (NullPointerException e) {
+                System.out.println("Retrying download");
+                if (++count == maxTries) throw e;
+            } catch (IOException | TransformerException | SAXException | XPathExpressionException e) {
+                e.printStackTrace();
             }
         }
-        ArrayList<Row> list = new ArrayList<>();
-        for (Row row : listOfTupleResult) {
-            if (Operations.where(row, output)) {
-                list.add(row);
-            }
-        }
-        this.clear();
-        this.addAll(list);
-
     }
 
 

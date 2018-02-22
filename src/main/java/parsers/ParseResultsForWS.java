@@ -4,14 +4,17 @@ import download.WebService;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -35,7 +38,7 @@ public class ParseResultsForWS {
      * @return the list of tuples; each tuples respects the order of head variables as defined in the description of the WS
      * @throws Exception
      */
-    public static ArrayList<String[]> showResults(String fileWithWithTransfResults, WebService ws) throws Exception {
+    public static ArrayList<String[]> showResults(String fileWithWithTransfResults, WebService ws) throws IOException, XPathExpressionException, SAXException {
         FileWriter fw = new FileWriter("myfile.txt", true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter out = new PrintWriter(bw);

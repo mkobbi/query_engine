@@ -9,10 +9,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class OperationsTest {
-    private final String query = "getArtistInfoByName(Snoop Dogg, ?artistId, ?beginDate, ?endDate)";
+    private final String query = "getArtistInfoByName(Metallica, ?artistId, ?beginDate, ?endDate)";
     private final String query2 = "getAlbumsArtistId(?artistId, " +
-            "?albumTitle, ?albumId, ?releaseData, ?country)";
-
+            "Metallica, ?albumId, ?releaseData, ?country)";
+    private static final String ANSI_RESET = "\u001B[0m";
+    private static final String ANSI_GREEN = "\u001B[32m";
+    private static final String ANSI_BLUE = "\033[34m";
     @Test
     public void join() throws Exception {
         List<String> decomposition = Arrays.asList(query2.substring(0, query2.length() - 1).split("[(,]"));
@@ -20,7 +22,7 @@ public class OperationsTest {
         View t = new View(query);
 
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
-        String column = ws.headVariables.get(0).substring(1);
+        String column = Objects.requireNonNull(ws).headVariables.get(0).substring(1);
         System.out.println(column);
 
         List<Row> sigma = Operations.select(t, column);
@@ -30,11 +32,16 @@ public class OperationsTest {
         String[] input = l.toArray(new String[0]);
         View u = new View(query2, input);
 
-        List<Row> l1 = t;
-        List<Row> l2 = u;
 
-        Set<String> inputKeySet = new HashSet<>(t.get(0).keySet());
-        inputKeySet.retainAll(u.get(0).keySet());
+        Set<String> inputKeySet = new HashSet<>();
+        try {
+            inputKeySet.clear();
+            inputKeySet.addAll(new HashSet<>(t.get(0).keySet()));
+            inputKeySet.retainAll(u.get(0).keySet());
+        } catch (IndexOutOfBoundsException e) {
+            //e.printStackTrace();
+            System.err.println(ANSI_GREEN + "C'est vide" + ANSI_RESET);
+        }
         String inputKey = inputKeySet.toArray(new String[0])[0];
         System.out.println(inputKey);
         /*
@@ -48,12 +55,12 @@ public class OperationsTest {
         partialResults.forEach(System.out::println);
         */
         List<Row> jointure = Operations.join(t, u);
-        jointure.stream().forEach(System.out::println);
+        jointure.forEach(System.out::println);
     }
 
 
     @Test
-    public void where() throws Exception {
+    public void where() {
         Map<String, String> m1 = new HashMap<String, String>() {{
             put("artistName", "Elvis Presley");
             put("artistId", "1");
@@ -75,7 +82,7 @@ public class OperationsTest {
         String webServiceName = decomposition.get(0);
         View t = new View(query);
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
-        String column = ws.headVariables.get(0).substring(1);
+        String column = Objects.requireNonNull(ws).headVariables.get(0).substring(1);
         System.out.println(column);
 
         List<Row> sigma = Operations.select(t, column);
