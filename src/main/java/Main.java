@@ -39,6 +39,7 @@ public class Main {
                 sb.append(i == headers.size() - 1 ? "\n" : ";");
             }
         }
+        System.out.println("Query executed. Result stored in " + System.getProperty("user.dir") + "/query-" + timestamp + ".csv");
         out.println(sb.toString());
         out.close();
         bw.close();
@@ -89,7 +90,7 @@ public class Main {
                 t = new View(t, new View(atom, joinValues));
             } catch (IndexOutOfBoundsException e) {
                 t = new View(args);
-                break;
+                //break;
             } catch (Exception e) {
                 e.printStackTrace();
             }

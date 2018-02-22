@@ -107,7 +107,7 @@ public class View extends ArrayList<Row> {
 
     private void setData(String webServiceName, String... inputs) {
         int count = 0;
-        final int maxTries = 3;
+        final int maxTries = 5;
         while (true) {
             try {
                 WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
