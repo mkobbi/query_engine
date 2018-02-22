@@ -5,16 +5,16 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Operations {
-    public static List<Map<String, String>> join(Table t, Table u) {
+    public static ArrayList<Row> join(View t, View u) {
         //Mettre le contenu du dernier forEach dans une map
         //Boucler
-        List<Map<String, String>> l1 = t.getData();
-        List<Map<String, String>> l2 = u.getData();
-        ArrayList<Map<String, String>> partialResults = new ArrayList<>();
+        List<Row> l1 = t.getData();
+        List<Row> l2 = u.getData();
+        ArrayList<Row> partialResults = new ArrayList<>();
         l1.stream().flatMap(v1 -> l2.stream().filter(v2 -> where(v1, v2))
                 .map(v2 -> merge(v1, v2)))
                 .forEach(partialResults::add);
-        //System.out.println(partialResults.get(0));
+        System.out.println(partialResults.get(0));
         return partialResults;
     }
 
@@ -29,15 +29,17 @@ public class Operations {
         return test;
     }
 
-    public static List<Map<String, String>> select(Table from, String... columns) {
+    public static ArrayList<Row> select(View from, String... columns) {
         return from.getData().stream().map(tuple -> Arrays.stream(columns)
                 .filter(tuple::containsKey)
-                .collect(Collectors.toMap(Function.identity(), tuple::get)))
-                .collect(Collectors.toList());
+                .collect(Collectors.toMap(Function.identity(), tuple::get, (w, v) -> {
+                    throw new IllegalStateException(String.format("Duplicate key %s", w));
+                }, Row::new)))
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    static Map<String, String> merge(Map<String, String> m1, Map<String, String> m2) {
-        LinkedHashMap<String, String> mx = new LinkedHashMap<>(m1);
+    static Row merge(Row m1, Row m2) {
+        Row mx = new Row(m1);
         mx.putAll(m2);
         return mx;
     }

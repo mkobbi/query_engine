@@ -6,18 +6,17 @@ import parsers.ParseResultsForWS;
 import parsers.WebServiceDescription;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static pandas.Operations.join;
 
-public class Table {
+public class View {
     private Queries type;
     private final String inputKey;
     private final String[] inputValues;
-    private List<Map<String, String>> data;
-    private Map<String, String> output;
+    private ArrayList<Row> data;
+    private Row output;
 
-    /*    public Table(String query) throws Exception {
+    /*    public View(String query) throws Exception {
         this(query, Objects.requireNonNull(WebServiceDescription.
                 loadDescription("mb_" + Arrays.
                         asList(query.substring(0, query.length() - 1).
@@ -29,7 +28,7 @@ public class Table {
      * @param inputValues list of input values to be considered for the primary key
      * @throws Exception when the webService can't be correctly loaded
      */
-    public Table(String query, String... inputValues) throws Exception {
+    public View(String query, String... inputValues) throws Exception {
         this(query, Objects.requireNonNull(WebServiceDescription.
                         loadDescription("mb_" + Arrays.
                                 asList(query.substring(0, query.length() - 1).trim().
@@ -41,9 +40,9 @@ public class Table {
      * @param t left side of the join operation
      * @param u right side of the join operation
      */
-    public Table(Table t, Table u) {
-        this.type = Queries.mb_PartialResults;
+    public View(View t, View u) {
         this.data = join(t, u);
+        this.type = Queries.mb_PartialResults;
         Set<String> inputKeySet = new HashSet<>(t.getData().get(0).keySet());
         inputKeySet.retainAll(u.getData().get(0).keySet());
         this.inputKey = inputKeySet.toArray(new String[0])[0];
@@ -59,7 +58,7 @@ public class Table {
      * @param inputValues list of input values to be considered for the primary key
      * @throws Exception
      */
-    public Table(String query, List<String> keys, String... inputValues) throws Exception {
+    public View(String query, List<String> keys, String... inputValues) throws Exception {
 
         List<String> decomposition = Arrays.asList(query.substring(0, query.length() - 1)
                 .trim().split("[(,]"));
@@ -82,12 +81,12 @@ public class Table {
 
     private void setData(String webServiceName, String... inputs) throws Exception {
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
-        ArrayList<Map<String, String>> listOfTupleResult = new ArrayList<>();
+        List<Row> listOfTupleResult = new ArrayList<>();
         for (String input : inputs) {
             String fileWithCallResult = Objects.requireNonNull(ws).getCallResult(input);
             String fileWithTransfResults = ws.getTransformationResult(fileWithCallResult);
             for (String[] tuple : ParseResultsForWS.showResults(fileWithTransfResults, ws)) {
-                LinkedHashMap<String, String> toAdd = new LinkedHashMap<String, String>() {{
+                Row toAdd = new Row() {{
                     put(ws.headVariables.get(0).substring(1).trim(),
                             (tuple[0].contains("NODEF") || tuple[0].isEmpty()) ?
                                     input.trim()
@@ -100,18 +99,23 @@ public class Table {
                 listOfTupleResult.add(toAdd);
             }
         }
-        this.data = listOfTupleResult.stream()
-                .filter(row -> Operations.where(row, output)).collect(Collectors.toList());
+        ArrayList<Row> list = new ArrayList<>();
+        for (Row row : listOfTupleResult) {
+            if (Operations.where(row, output)) {
+                list.add(row);
+            }
+        }
+        this.data = list;
 
     }
 
 
     @Override
     public String toString() {
-        return "Table{" +
+        return "View{" +
                 "type=" + type +
                 ", inputValues='" + Arrays.toString(inputValues) + '\'' +
-                ", output=" + output +
+                ", output=" + output.toString() +
                 '}';
     }
 
@@ -124,13 +128,13 @@ public class Table {
         return inputValues;
     }
 
-    public Map<String, String> getOutput() {
+    public Row getOutput() {
         return output;
     }
 
     private void setOutput(String query, List<String> keys) {
         List<String> decomposition = Arrays.asList(query.substring(0, query.length() - 1).trim().split("[(,]"));
-        this.output = new LinkedHashMap<>();
+        this.output = new Row();
         keys.remove(0);
         for (int i = 0; i < decomposition.size() - 2; i++) {
             String value = decomposition.get(i + 2);
@@ -141,7 +145,7 @@ public class Table {
         }
     }
 
-    public List<Map<String, String>> getData() {
+    public List<Row> getData() {
         return data;
     }
 

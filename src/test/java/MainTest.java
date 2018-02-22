@@ -1,6 +1,8 @@
 import download.WebService;
 import org.junit.Test;
-import pandas.Table;
+import pandas.Column;
+import pandas.Row;
+import pandas.View;
 import parsers.WebServiceDescription;
 
 import java.sql.Timestamp;
@@ -20,28 +22,28 @@ public class MainTest {
 
     @Test
     public void main() throws Exception {
-        Table t = new Table(query);
+        View t = new View(query);
         //Arrays.asList(select("artistId", t)).stream().forEach(System.out::println);
-        List<Map<String, String>> sigma = select(t, "artistId");
+        List<Row> sigma = select(t, "artistId");
         List<String> l = new ArrayList<>();
         sigma.stream().map(tuple -> tuple.get("artistId")).forEach(l::add);
         String[] input = l.toArray(new String[0]);
-        Table u = new Table(query2, input);
+        View u = new View(query2, input);
         //join(t, u).stream().forEach(System.out::println);
         //u.getData().stream().forEach(System.out::println);
-        Table jointure = new Table(t, u);
+        View jointure = new View(t, u);
         select(t, "artistName", "albumTitle").forEach(System.out::println);
         System.out.println(ANSI_GREEN + jointure.getInputKey() + ANSI_RESET);
     }
 
     @Test
     public void filterOuput() throws Exception {
-        Table t = new Table(query);
-        List<Map<String, String>> sigma = select(t, "artistId");
+        View t = new View(query);
+        List<Row> sigma = select(t, "artistId");
         List<String> l = new ArrayList<>();
         sigma.stream().map(tuple -> tuple.get("artistId")).forEach(l::add);
         String[] input = l.toArray(new String[0]);
-        Table u = new Table(query2, input);
+        View u = new View(query2, input);
         System.out.println(ANSI_GREEN + u.getOutput() + ANSI_RESET);
         /*
         u.getData().stream()
@@ -61,7 +63,7 @@ public class MainTest {
 
         List<String> atoms = query.subList(1, query.size());
 
-        Table t = new Table(atoms.get(0));
+        View t = new View(atoms.get(0));
         atoms.remove(atoms.get(0));
         for (String atom : atoms) {
 
@@ -80,18 +82,24 @@ public class MainTest {
                     .forEach(System.out::println);
 
             String[] joinValues =
-                    select(t, joinKey).stream().map(elt -> elt.get(joinKey)).toArray(String[]::new);
+                    //Set<String> joinValues =
+                    //        select(t, joinKey).stream().map(elt -> elt.get(joinKey))
+                    //                .toArray(String[]::new);
+                    //.collect(Collectors.toSet()).toArray(new String[0]);
+                    Column.columnValues(t, joinKey);
 
+            System.out.println("Join Values");
             Arrays.asList(joinValues).forEach(System.out::println);
+            //System.out.println(joinValues);
 
-            Table u = new Table(atom, joinValues);
+            View u = new View(atom, joinValues);
             System.out.print(ANSI_BLUE);
             u.getData().stream()
                     //.map(elt -> elt.get(joinKey))
                     //.collect(Collectors.toList());
                     .forEach(System.out::println);
             System.out.print(ANSI_RESET);
-            t = new Table(t, u);
+            t = new View(t, u);
             select(t, joinKey).stream()
                     //.map(elt -> elt.get(joinKey))
                     //.collect(Collectors.toList());
@@ -109,8 +117,8 @@ public class MainTest {
 
     @Test
     public void toCSV() throws Exception {
-        Table t = new Table(query);
-        final List<Map<String, String>> list = t.getData();
+        View t = new View(query);
+        final List<Row> list = t.getData();
         List<String> headers = list.stream()
                 .flatMap(map -> map.keySet().stream()).distinct().collect(Collectors.toList());
         final StringBuffer sb = new StringBuffer();

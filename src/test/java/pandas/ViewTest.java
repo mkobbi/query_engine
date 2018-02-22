@@ -11,7 +11,7 @@ import java.util.*;
 import static junit.framework.TestCase.fail;
 import static pandas.Operations.select;
 
-public class TableTest {
+public class ViewTest {
     //private final String query = "getAlbumsArtistId(381086ea-f511-4aba-bdf9-71c753dc5077, " +
     //private final String query = "getAlbumsArtistId(?artistId, " +
     //        "?albumTitle, ?albumId, ?releaseData, ?country)";
@@ -23,13 +23,13 @@ public class TableTest {
     private final WebService ws = WebServiceDescription.loadDescription("mb_getAlbumsArtistId");
     private final ArrayList<String> keys = Objects.requireNonNull(ws).headVariables;
 
-    public TableTest() throws IOException {
+    public ViewTest() throws IOException {
     }
 
     @org.junit.Test
     public void toStringTest() throws Exception {
-        Table table = new Table(query, keys);
-        System.out.println(table);
+        View view = new View(query, keys);
+        System.out.println(view);
 
     }
 
@@ -43,7 +43,7 @@ public class TableTest {
     public void getInput() throws Exception {
         List<String> decomposition = Arrays.asList(query.substring(0, query.length() - 1).split("[(,]"));
         String input = decomposition.get(1);
-        Table t = new Table(query);
+        View t = new View(query);
         System.out.println(input);
     }
 
@@ -53,10 +53,10 @@ public class TableTest {
         WebService ws = WebServiceDescription.loadDescription("mb_getArtistInfoByName");
         ArrayList<String> keys = ws.headVariables;
         //System.out.println(keys);
-        Table table = new Table(query, keys);
-        //System.out.println(table.getOutput().keySet());
+        View view = new View(query, keys);
+        //System.out.println(view.getOutput().keySet());
         //System.out.println(new HashSet<>(keys).remove("?artistName"));
-        assert (table.getOutput().keySet().equals(new HashSet<>(keys)));
+        assert (view.getOutput().keySet().equals(new HashSet<>(keys)));
     }
 
     @Test
@@ -92,51 +92,51 @@ public class TableTest {
     public void setDataWithPreviousResults() throws Exception {
         List<String> decomposition = Arrays.asList(query2.substring(0, query2.length() - 1).split("[(,]"));
         String webServiceName = decomposition.get(0);
-        Table t = new Table(query);
+        View t = new View(query);
 
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
         String column = ws.headVariables.get(0).substring(1);
         System.out.println(column);
 
-        List<Map<String, String>> sigma = select(t, column);
+        List<Row> sigma = select(t, column);
         List<String> l = new ArrayList<>();
         sigma.stream().map(tuple -> tuple.get(column)).forEach(l::add);
 
         String[] input = l.toArray(new String[0]);
-        Table u = new Table(query2, input);
+        View u = new View(query2, input);
         u.getData().forEach(System.out::println);
     }
 
     @Test
     public void columnUniverse() throws Exception {
-        Table t = new Table(query);
-        List<Map<String, String>> data = t.getData();
+        View t = new View(query);
+        List<Row> data = t.getData();
         //data.stream().forEach(System.out::println);
         data.stream().map(tuple -> tuple.get("artistId")).forEach(System.out::println);
     }
 
     @Test
     public void getData() throws Exception {
-        Table table = new Table(query);
-        table.getData().stream().forEach(System.out::println);
+        View view = new View(query);
+        view.getData().stream().forEach(System.out::println);
     }
 
     @Test
     public void joinConstructor() throws Exception {
         List<String> decomposition = Arrays.asList(query2.substring(0, query2.length() - 1).split("[(,]"));
         String webServiceName = decomposition.get(0);
-        Table t = new Table(query);
+        View t = new View(query);
 
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
         String column = ws.headVariables.get(0).substring(1);
         System.out.println(column);
 
-        List<Map<String, String>> sigma = select(t, column);
+        List<Row> sigma = select(t, column);
         List<String> l = new ArrayList<>();
         sigma.stream().map(tuple -> tuple.get(column)).forEach(l::add);
 
         String[] input = l.toArray(new String[0]);
-        Table u = new Table(query2, input);
+        View u = new View(query2, input);
 
         /*Queries type = Queries.mb_PartialResults;
         List<Map<String, String>> data = join(t, u);
@@ -152,7 +152,7 @@ public class TableTest {
         System.out.println("Type: " + type + "\nInput Key: " + inputKey +
                 "\nOutput: " + output);
         */
-        Table jointure = new Table(t, u);
+        View jointure = new View(t, u);
         jointure.getData().forEach(System.out::println);
         System.out.println(jointure.getType());
         System.out.println(jointure.getOutput());

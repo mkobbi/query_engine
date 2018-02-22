@@ -5,8 +5,8 @@ import org.junit.Test;
 import parsers.WebServiceDescription;
 
 import java.util.*;
-
-import static pandas.Operations.select;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class OperationsTest {
     private final String query = "getArtistInfoByName(Snoop Dogg, ?artistId, ?beginDate, ?endDate)";
@@ -17,21 +17,21 @@ public class OperationsTest {
     public void join() throws Exception {
         List<String> decomposition = Arrays.asList(query2.substring(0, query2.length() - 1).split("[(,]"));
         String webServiceName = decomposition.get(0);
-        Table t = new Table(query);
+        View t = new View(query);
 
         WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
         String column = ws.headVariables.get(0).substring(1);
         System.out.println(column);
 
-        List<Map<String, String>> sigma = select(t, column);
+        List<Row> sigma = Operations.select(t, column);
         List<String> l = new ArrayList<>();
         sigma.stream().map(tuple -> tuple.get(column)).forEach(l::add);
 
         String[] input = l.toArray(new String[0]);
-        Table u = new Table(query2, input);
+        View u = new View(query2, input);
 
-        List<Map<String, String>> l1 = t.getData();
-        List<Map<String, String>> l2 = u.getData();
+        List<Row> l1 = t.getData();
+        List<Row> l2 = u.getData();
 
         Set<String> inputKeySet = new HashSet<>(t.getData().get(0).keySet());
         inputKeySet.retainAll(u.getData().get(0).keySet());
@@ -47,7 +47,7 @@ public class OperationsTest {
 
         partialResults.forEach(System.out::println);
         */
-        List<Map<String, String>> jointure = Operations.join(t, u);
+        List<Row> jointure = Operations.join(t, u);
         jointure.stream().forEach(System.out::println);
     }
 
@@ -67,5 +67,30 @@ public class OperationsTest {
             put("country", "US");
         }};
         assert (Operations.where(m1, m2));
+    }
+
+    @Test
+    public void select() throws Exception {
+        List<String> decomposition = Arrays.asList(query2.substring(0, query2.length() - 1).split("[(,]"));
+        String webServiceName = decomposition.get(0);
+        View t = new View(query);
+        WebService ws = WebServiceDescription.loadDescription("mb_" + webServiceName);
+        String column = ws.headVariables.get(0).substring(1);
+        System.out.println(column);
+
+        List<Row> sigma = Operations.select(t, column);
+        List<String> l = new ArrayList<>();
+        sigma.stream().map(tuple -> tuple.get(column)).forEach(l::add);
+
+        String[] input = l.toArray(new String[0]);
+        View u = new View(query2, input);
+        View from = new View(t, u);
+        String[] columns = new String[]{"artistName", "albumTitle"};
+        from.getData().stream().map(tuple -> Arrays.stream(columns)
+                .filter(tuple::containsKey)
+                .collect(Collectors.toMap(Function.identity(), tuple::get, (w, v) -> {
+                    throw new IllegalStateException(String.format("Duplicate key %s", w));
+                }, LinkedHashMap::new)))
+                .forEach(System.out::println);
     }
 }

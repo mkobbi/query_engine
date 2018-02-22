@@ -1,5 +1,6 @@
 import download.WebService;
-import pandas.Table;
+import pandas.Row;
+import pandas.View;
 import parsers.WebServiceDescription;
 
 import java.io.BufferedWriter;
@@ -18,7 +19,7 @@ public class Main {
 
     private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 
-    private static void toCSV(List<Map<String, String>> data) throws IOException {
+    private static void toCSV(List<Row> data) throws IOException {
         String timestamp = sdf.format(new Timestamp(System.currentTimeMillis()));
         FileWriter fw = new FileWriter("query-" + timestamp + ".csv", true);
         BufferedWriter bw = new BufferedWriter(fw);
@@ -28,12 +29,12 @@ public class Main {
         final StringBuffer sb = new StringBuffer();
         for (int i = 0; i < headers.size(); i++) {
             sb.append(headers.get(i));
-            sb.append(i == headers.size() - 1 ? "\n" : ",");
+            sb.append(i == headers.size() - 1 ? "\n" : ";");
         }
         for (Map<String, String> map : data) {
             for (int i = 0; i < headers.size(); i++) {
                 sb.append(map.get(headers.get(i)));
-                sb.append(i == headers.size() - 1 ? "\n" : ",");
+                sb.append(i == headers.size() - 1 ? "\n" : ";");
             }
         }
         out.println(sb.toString());
@@ -44,8 +45,6 @@ public class Main {
 
     public static void main(String[] argv) throws Exception {
 
-        System.out.println("Hello World!");
-
         Scanner sc = new Scanner(System.in);
         String input = sc.nextLine();
         List<String> query = new LinkedList<>(Arrays.asList(input
@@ -54,7 +53,7 @@ public class Main {
 
         List<String> atoms = query.subList(1, query.size());
 
-        Table t = new Table(atoms.get(0));
+        View t = new View(atoms.get(0));
         atoms.remove(atoms.get(0));
         for (String atom : atoms) {
 
@@ -68,7 +67,7 @@ public class Main {
             String[] joinValues =
                     select(t, joinKey).stream().map(elt -> elt.get(joinKey)).toArray(String[]::new);
 
-            t = new Table(t, new Table(atom, joinValues));
+            t = new View(t, new View(atom, joinValues));
         }
         String result = query.get(0).replaceAll("\\s+", "");
         List<String> composite = Arrays.asList(result.substring(0, result.length() - 1)
