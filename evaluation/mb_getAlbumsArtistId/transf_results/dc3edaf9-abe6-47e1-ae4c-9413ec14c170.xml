@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">I.S.C.</ITEM>
+  <ITEM ANGIE-VAR="?albumId">5152f30a-ead4-4cbe-bcbe-c43101912881</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">2009-06-08</ITEM>
+  <ITEM ANGIE-VAR="?country">GB</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Plus Ten</ITEM>
+  <ITEM ANGIE-VAR="?albumId">9172db7e-2237-4bd7-879f-ee6d62553c27</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">2009-12</ITEM>
+  <ITEM ANGIE-VAR="?country">GB</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Plus Ten</ITEM>
+  <ITEM ANGIE-VAR="?albumId">a37d9b05-c85a-4083-819c-42269a924614</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">2012-09-10</ITEM>
+  <ITEM ANGIE-VAR="?country">GB</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Steel Erector</ITEM>
+  <ITEM ANGIE-VAR="?albumId">fd00d264-3ea6-4497-a377-b7ad074506d4</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">2012-11-05</ITEM>
+  <ITEM ANGIE-VAR="?country">GB</ITEM></RECORD></RESULT>

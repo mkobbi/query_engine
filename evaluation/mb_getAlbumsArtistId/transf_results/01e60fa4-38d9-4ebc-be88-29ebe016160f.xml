@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Too Many Nights</ITEM>
+  <ITEM ANGIE-VAR="?albumId">0db49b3e-3d33-4115-98a3-1fed785499b3</ITEM>
+  <ITEM ANGIE-VAR="?releaseData"/>
+  <ITEM ANGIE-VAR="?country"/></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Ghetto Life</ITEM>
+  <ITEM ANGIE-VAR="?albumId">124c27c3-93d1-4185-9b9e-71eea77719b3</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">1999</ITEM>
+  <ITEM ANGIE-VAR="?country">DE</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Fly (The Lonely Shepherd)</ITEM>
+  <ITEM ANGIE-VAR="?albumId">9a1bbb31-84a2-41c0-bb21-10b07ac5751b</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">1999</ITEM>
+  <ITEM ANGIE-VAR="?country">DE</ITEM></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">Shine (David's Song)</ITEM>
+  <ITEM ANGIE-VAR="?albumId">eda36bf3-d346-4f5b-9a18-0695bda8ec37</ITEM>
+  <ITEM ANGIE-VAR="?releaseData">1999-01-04</ITEM>
+  <ITEM ANGIE-VAR="?country">DE</ITEM></RECORD></RESULT>

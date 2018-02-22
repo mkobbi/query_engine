@@ -1,0 +1,212 @@
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?artistName position 0
+Variable : ?artistId position 1
+Variable : ?beginDate position 2
+Variable : ?endDate position 3
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/artist/?name= null
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?artistName position 0
+Variable : ?artistId position 1
+Variable : ?beginDate position 2
+Variable : ?endDate position 3
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/artist/?name= null
+File with the transformation result: evaluation/mb_getArtistInfoByName/transf_results/Kendrick+Lamar.xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/1fa447cc-ee25-47b2-83d8-66e53b7b3d2d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/5c3dffd4-dc80-4331-a98e-101046d6b747.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01cd1fec-12c2-487b-a9c0-cae353966417.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8325c942-af03-4f64-a331-00180b3e4409.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/381086ea-f511-4aba-bdf9-71c753dc5077.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/819140b8-a874-4ddb-932c-e0b246775ca9.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e09ae716-b7fa-4d83-bfca-c9ba019ca862.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/bdcacd56-670c-463a-b1c6-9a1bc1e5280d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9a8ea263-a495-4750-ab63-3004b3a1bc5d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/ba19affc-9109-42c8-91e3-bf681eefcf98.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8a5d7bfd-e9b3-4e5d-a9fb-6581aba4e3ad.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9d2746ed-1837-4267-810b-9b2935158736.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/67fd6e0c-3c6c-4d90-8df8-c1dca08696b4.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/7b7b48f8-dd3e-4766-a3dd-79dca3f72d85.xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/1fa447cc-ee25-47b2-83d8-66e53b7b3d2d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/5c3dffd4-dc80-4331-a98e-101046d6b747.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01cd1fec-12c2-487b-a9c0-cae353966417.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8325c942-af03-4f64-a331-00180b3e4409.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/381086ea-f511-4aba-bdf9-71c753dc5077.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/819140b8-a874-4ddb-932c-e0b246775ca9.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e09ae716-b7fa-4d83-bfca-c9ba019ca862.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/bdcacd56-670c-463a-b1c6-9a1bc1e5280d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9a8ea263-a495-4750-ab63-3004b3a1bc5d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/ba19affc-9109-42c8-91e3-bf681eefcf98.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8a5d7bfd-e9b3-4e5d-a9fb-6581aba4e3ad.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9d2746ed-1837-4267-810b-9b2935158736.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/67fd6e0c-3c6c-4d90-8df8-c1dca08696b4.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/7b7b48f8-dd3e-4766-a3dd-79dca3f72d85.xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/1fa447cc-ee25-47b2-83d8-66e53b7b3d2d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/5c3dffd4-dc80-4331-a98e-101046d6b747.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01cd1fec-12c2-487b-a9c0-cae353966417.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8325c942-af03-4f64-a331-00180b3e4409.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/381086ea-f511-4aba-bdf9-71c753dc5077.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/819140b8-a874-4ddb-932c-e0b246775ca9.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e09ae716-b7fa-4d83-bfca-c9ba019ca862.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/bdcacd56-670c-463a-b1c6-9a1bc1e5280d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9a8ea263-a495-4750-ab63-3004b3a1bc5d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/ba19affc-9109-42c8-91e3-bf681eefcf98.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8a5d7bfd-e9b3-4e5d-a9fb-6581aba4e3ad.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9d2746ed-1837-4267-810b-9b2935158736.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/67fd6e0c-3c6c-4d90-8df8-c1dca08696b4.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/7b7b48f8-dd3e-4766-a3dd-79dca3f72d85.xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/1fa447cc-ee25-47b2-83d8-66e53b7b3d2d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/5c3dffd4-dc80-4331-a98e-101046d6b747.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01cd1fec-12c2-487b-a9c0-cae353966417.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8325c942-af03-4f64-a331-00180b3e4409.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/381086ea-f511-4aba-bdf9-71c753dc5077.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/819140b8-a874-4ddb-932c-e0b246775ca9.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e09ae716-b7fa-4d83-bfca-c9ba019ca862.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/bdcacd56-670c-463a-b1c6-9a1bc1e5280d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9a8ea263-a495-4750-ab63-3004b3a1bc5d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/ba19affc-9109-42c8-91e3-bf681eefcf98.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8a5d7bfd-e9b3-4e5d-a9fb-6581aba4e3ad.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9d2746ed-1837-4267-810b-9b2935158736.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/67fd6e0c-3c6c-4d90-8df8-c1dca08696b4.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/7b7b48f8-dd3e-4766-a3dd-79dca3f72d85.xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/1fa447cc-ee25-47b2-83d8-66e53b7b3d2d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/5c3dffd4-dc80-4331-a98e-101046d6b747.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01cd1fec-12c2-487b-a9c0-cae353966417.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8325c942-af03-4f64-a331-00180b3e4409.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/381086ea-f511-4aba-bdf9-71c753dc5077.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/819140b8-a874-4ddb-932c-e0b246775ca9.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e09ae716-b7fa-4d83-bfca-c9ba019ca862.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/bdcacd56-670c-463a-b1c6-9a1bc1e5280d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9a8ea263-a495-4750-ab63-3004b3a1bc5d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/ba19affc-9109-42c8-91e3-bf681eefcf98.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8a5d7bfd-e9b3-4e5d-a9fb-6581aba4e3ad.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9d2746ed-1837-4267-810b-9b2935158736.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/67fd6e0c-3c6c-4d90-8df8-c1dca08696b4.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/7b7b48f8-dd3e-4766-a3dd-79dca3f72d85.xml
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?albumId position 0
+Variable : ?artistName position 1
+Variable : ?songTitle position 2
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/track/?releaseid= null &fmt=xml
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?artistName position 0
+Variable : ?artistId position 1
+Variable : ?beginDate position 2
+Variable : ?endDate position 3
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/artist/?name= null
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?artistName position 0
+Variable : ?artistId position 1
+Variable : ?beginDate position 2
+Variable : ?endDate position 3
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/artist/?name= null
+File with the transformation result: evaluation/mb_getArtistInfoByName/transf_results/Kendrick+Lamar.xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+Variable : ?artistId position 0
+Variable : ?albumTitle position 1
+Variable : ?albumId position 2
+Variable : ?releaseData position 3
+Variable : ?country position 4
+The parts of the URLs (calls): https://musicbrainz.org/ws/2/release?artist= null &fmt=xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/1fa447cc-ee25-47b2-83d8-66e53b7b3d2d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/5c3dffd4-dc80-4331-a98e-101046d6b747.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01cd1fec-12c2-487b-a9c0-cae353966417.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8325c942-af03-4f64-a331-00180b3e4409.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/381086ea-f511-4aba-bdf9-71c753dc5077.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/819140b8-a874-4ddb-932c-e0b246775ca9.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e09ae716-b7fa-4d83-bfca-c9ba019ca862.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/bdcacd56-670c-463a-b1c6-9a1bc1e5280d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9a8ea263-a495-4750-ab63-3004b3a1bc5d.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/ba19affc-9109-42c8-91e3-bf681eefcf98.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8a5d7bfd-e9b3-4e5d-a9fb-6581aba4e3ad.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/9d2746ed-1837-4267-810b-9b2935158736.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/67fd6e0c-3c6c-4d90-8df8-c1dca08696b4.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/7b7b48f8-dd3e-4766-a3dd-79dca3f72d85.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8f3e12c7-b60c-4221-a512-8fb24198ce1e.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/090947a2-2987-4118-bdd4-0c49f6afa8f3.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/6f35220e-b7e2-44d2-828e-31bfde976ce0.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/d0b28c9c-207b-4383-9dde-fbc7ff9231b5.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/e297fe00-4382-41a0-9479-f5980de28501.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/dc3edaf9-abe6-47e1-ae4c-9413ec14c170.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/a785e329-9cd7-4076-988d-b479ce38d8b0.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/01e60fa4-38d9-4ebc-be88-29ebe016160f.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/8bc75c6c-42fe-4203-b390-efab9ac50591.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/d7e68f0d-ed07-4c0a-9485-696dd4167002.xml
+File with the transformation result: evaluation/mb_getAlbumsArtistId/transf_results/b862d39a-72b3-4920-97f0-9a821f2a7e0c.xml
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?albumId position 0
+Variable : ?artistName position 1
+Variable : ?songTitle position 2
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/track/?releaseid= null &fmt=xml
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?albumId position 0
+Variable : ?artistName position 1
+Variable : ?songTitle position 2
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/track/?releaseid= null &fmt=xml
+ prefix name=w  value=http://www.w3.org/1999/02/22-rdf-syntax-ns#
+ prefix name=y  value=http://mpii.de/yago/resource/
+Variable : ?albumId position 0
+Variable : ?artistName position 1
+Variable : ?songTitle position 2
+The parts of the URLs (calls): http://musicbrainz.org/ws/1/track/?releaseid= null &fmt=xml
+File with the transformation result: evaluation/mb_getSongByAlbumId/transf_results/17696ce7-ba44-4e66-8ca3-8b1d2ec47d31.xml
+File with the transformation result: evaluation/mb_getSongByAlbumId/transf_results/4ee0e10c-ea4e-4ac5-b06b-95d02aa42d29.xml
+File with the transformation result: evaluation/mb_getSongByAlbumId/transf_results/d0b24c41-8562-47fb-bfe7-5f03397c41c7.xml

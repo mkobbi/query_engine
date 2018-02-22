@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><RESULT xmlns:mb="http://musicbrainz.org/ns/mmd-2.0#">
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">2011-03-01: Caledonia Lounge, Athens, GA, USA</ITEM>
+  <ITEM ANGIE-VAR="?albumId">12b33442-2d85-4147-9a72-d7a6d7e00919</ITEM>
+  <ITEM ANGIE-VAR="?releaseData"/>
+  <ITEM ANGIE-VAR="?country"/></RECORD>
+<RECORD>
+  <ITEM ANGIE-VAR="?artistId"> NODEF </ITEM>
+  <ITEM ANGIE-VAR="?albumTitle">2011-08-31: 40 Watt Club, Athens, GA, USA</ITEM>
+  <ITEM ANGIE-VAR="?albumId">2d382f3c-5cea-48b8-ba49-bcf770fc5e3c</ITEM>
+  <ITEM ANGIE-VAR="?releaseData"/>
+  <ITEM ANGIE-VAR="?country"/></RECORD></RESULT>
