@@ -104,13 +104,13 @@ public class ViewTest {
 
         String[] input = l.toArray(new String[0]);
         View u = new View(query2, input);
-        u.getData().forEach(System.out::println);
+        u.forEach(System.out::println);
     }
 
     @Test
     public void columnUniverse() throws Exception {
         View t = new View(query);
-        List<Row> data = t.getData();
+        List<Row> data = t;
         //data.stream().forEach(System.out::println);
         data.stream().map(tuple -> tuple.get("artistId")).forEach(System.out::println);
     }
@@ -118,7 +118,7 @@ public class ViewTest {
     @Test
     public void getData() throws Exception {
         View view = new View(query);
-        view.getData().stream().forEach(System.out::println);
+        view.stream().forEach(System.out::println);
     }
 
     @Test
@@ -153,7 +153,7 @@ public class ViewTest {
                 "\nOutput: " + output);
         */
         View jointure = new View(t, u);
-        jointure.getData().forEach(System.out::println);
+        jointure.forEach(System.out::println);
         System.out.println(jointure.getType());
         System.out.println(jointure.getOutput());
         Arrays.asList(jointure.getInputValues()).forEach(System.out::println);

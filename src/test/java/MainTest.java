@@ -50,7 +50,7 @@ public class MainTest {
                 .filter(row -> Operations.where(row, u.getOutput()))
                 .forEach(System.out::println);
          */
-        u.getData().forEach(System.out::println);
+        u.forEach(System.out::println);
 
     }
 
@@ -94,7 +94,7 @@ public class MainTest {
 
             View u = new View(atom, joinValues);
             System.out.print(ANSI_BLUE);
-            u.getData().stream()
+            u.stream()
                     //.map(elt -> elt.get(joinKey))
                     //.collect(Collectors.toList());
                     .forEach(System.out::println);
@@ -118,7 +118,7 @@ public class MainTest {
     @Test
     public void toCSV() throws Exception {
         View t = new View(query);
-        final List<Row> list = t.getData();
+        final List<Row> list = t;
         List<String> headers = list.stream()
                 .flatMap(map -> map.keySet().stream()).distinct().collect(Collectors.toList());
         final StringBuffer sb = new StringBuffer();

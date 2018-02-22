@@ -8,8 +8,8 @@ public class Operations {
     public static ArrayList<Row> join(View t, View u) {
         //Mettre le contenu du dernier forEach dans une map
         //Boucler
-        List<Row> l1 = t.getData();
-        List<Row> l2 = u.getData();
+        List<Row> l1 = t;
+        List<Row> l2 = u;
         ArrayList<Row> partialResults = new ArrayList<>();
         l1.stream().flatMap(v1 -> l2.stream().filter(v2 -> where(v1, v2))
                 .map(v2 -> merge(v1, v2)))
@@ -30,7 +30,7 @@ public class Operations {
     }
 
     public static ArrayList<Row> select(View from, String... columns) {
-        return from.getData().stream().map(tuple -> Arrays.stream(columns)
+        return from.stream().map(tuple -> Arrays.stream(columns)
                 .filter(tuple::containsKey)
                 .collect(Collectors.toMap(Function.identity(), tuple::get, (w, v) -> {
                     throw new IllegalStateException(String.format("Duplicate key %s", w));

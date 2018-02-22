@@ -30,11 +30,11 @@ public class OperationsTest {
         String[] input = l.toArray(new String[0]);
         View u = new View(query2, input);
 
-        List<Row> l1 = t.getData();
-        List<Row> l2 = u.getData();
+        List<Row> l1 = t;
+        List<Row> l2 = u;
 
-        Set<String> inputKeySet = new HashSet<>(t.getData().get(0).keySet());
-        inputKeySet.retainAll(u.getData().get(0).keySet());
+        Set<String> inputKeySet = new HashSet<>(t.get(0).keySet());
+        inputKeySet.retainAll(u.get(0).keySet());
         String inputKey = inputKeySet.toArray(new String[0])[0];
         System.out.println(inputKey);
         /*
@@ -86,7 +86,7 @@ public class OperationsTest {
         View u = new View(query2, input);
         View from = new View(t, u);
         String[] columns = new String[]{"artistName", "albumTitle"};
-        from.getData().stream().map(tuple -> Arrays.stream(columns)
+        from.stream().map(tuple -> Arrays.stream(columns)
                 .filter(tuple::containsKey)
                 .collect(Collectors.toMap(Function.identity(), tuple::get, (w, v) -> {
                     throw new IllegalStateException(String.format("Duplicate key %s", w));

@@ -9,11 +9,10 @@ import java.util.*;
 
 import static pandas.Operations.join;
 
-public class View {
+public class View extends ArrayList<Row> {
     private Queries type;
     private final String inputKey;
     private final String[] inputValues;
-    private ArrayList<Row> data;
     private Row output;
 
     /*    public View(String query) throws Exception {
@@ -41,12 +40,12 @@ public class View {
      * @param u right side of the join operation
      */
     public View(View t, View u) {
-        this.data = join(t, u);
+        super(join(t, u));
         this.type = Queries.mb_PartialResults;
-        Set<String> inputKeySet = new HashSet<>(t.getData().get(0).keySet());
-        inputKeySet.retainAll(u.getData().get(0).keySet());
+        Set<String> inputKeySet = new HashSet<>(t.get(0).keySet());
+        inputKeySet.retainAll(u.get(0).keySet());
         this.inputKey = inputKeySet.toArray(new String[0])[0];
-        this.inputValues = this.data.stream().
+        this.inputValues = this.stream().
                 map(entry -> entry.get(this.inputKey)).distinct().toArray(String[]::new);
         this.output = Operations.merge(t.getOutput(), u.getOutput());
     }
@@ -64,12 +63,15 @@ public class View {
                 .trim().split("[(,]"));
         String webServiceName = decomposition.get(0);
 
-        if (webServiceName.equals("getAlbumsArtistId")) {
+        if ("getAlbumsArtistId".equals(webServiceName)) {
             this.type = Queries.mb_getAlbumsArtistId;
-        } else if (webServiceName.equals("getArtistInfoByName")) {
+
+        } else if ("getArtistInfoByName".equals(webServiceName)) {
             this.type = Queries.mb_getArtistInfoByName;
-        } else if (webServiceName.equals("getSongByAlbumId")) {
+
+        } else if ("getSongByAlbumId".equals(webServiceName)) {
             this.type = Queries.mb_getSongByAlbumId;
+
         }
         //this.inputValues = new ArrayList<>();
         //decomposition.stream().filter(cell -> cell.contains("\"")).forEach(this.inputValues::add);
@@ -105,7 +107,8 @@ public class View {
                 list.add(row);
             }
         }
-        this.data = list;
+        this.clear();
+        this.addAll(list);
 
     }
 
@@ -145,9 +148,9 @@ public class View {
         }
     }
 
-    public List<Row> getData() {
+    /*public List<Row> getData() {
         return data;
-    }
+    }*/
 
     public String getInputKey() {
         return inputKey;
